@@ -1,35 +1,28 @@
-pipeline {
+pipeline{
     agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-                sh 'g++ main/task5.cpp'
+    stages{
+        stage('Build'){
+            steps{
+                sh 'g++ -c main/PES1UG20CS648.cpp'
+                sh 'g++ -o PES1UG20CS648 main/PES1UG20CS648.cpp'
+                echo 'build stage successfull'
             }
         }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-                sh './a.out'
+        stage('Test'){
+            steps{
+                sh './main/PES1UG20CS648'
+                echo 'test stage successful'
             }
         }
-
-        stage('Deploy') {
-            steps {
-                sh 'deploy.sh'
+        stage('Deploy'){
+            steps{
+                echo 'Deployment Successful'
             }
         }
     }
-
-    post {
-        always {
-            sh 'echo "Pipeline completed"'
-        }
-
-        failure {
-            sh 'echo "Pipeline failed"'
+    post{
+        failure{
+            echo 'Pipeline Failed'
         }
     }
 }
